@@ -12,6 +12,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
             background: #f3e2b8;
             font-family: Georgia, serif;
             color: #173d25;
@@ -19,17 +20,13 @@
         }
 
         .kort {
-            width: min(600px, 85%);
+            width: min(650px, 86%);
             padding: 45px 30px;
             background: #fff5d9;
             border: 5px solid #173d25;
             border-radius: 18px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.20);
-        }
-
-        .ikon {
-            font-size: 65px;
-            margin-bottom: 15px;
+            position: relative;
         }
 
         h1 {
@@ -48,15 +45,112 @@
             font-size: 16px;
             opacity: 0.75;
         }
+
+        .lego-linje {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .klods {
+            width: 34px;
+            height: 22px;
+            border-radius: 4px;
+            box-shadow: inset 0 -4px 0 rgba(0,0,0,0.18);
+        }
+
+        .groen { background: #176b3a; }
+        .roed  { background: #b52b22; }
+        .blaa  { background: #215b9b; }
+        .gul   { background: #d9a514; }
+
+        .hestezone {
+            height: 100px;
+            margin: 15px 0 5px;
+            position: relative;
+            overflow: visible;
+        }
+
+        .bil {
+            position: absolute;
+            left: 37%;
+            top: 30px;
+            font-size: 42px;
+        }
+
+        .hest {
+            position: absolute;
+            left: 50%;
+            top: 10px;
+            font-size: 58px;
+        }
+
+        .galop {
+            animation: galop 3.4s ease-in forwards;
+        }
+
+        @keyframes galop {
+            0% {
+                left: 50%;
+                transform: translateX(0) rotate(0deg);
+            }
+
+            12% {
+                transform: translateX(40px) translateY(-10px) rotate(-4deg);
+            }
+
+            24% {
+                transform: translateX(90px) translateY(3px) rotate(4deg);
+            }
+
+            36% {
+                transform: translateX(150px) translateY(-12px) rotate(-4deg);
+            }
+
+            48% {
+                transform: translateX(220px) translateY(2px) rotate(3deg);
+            }
+
+            65% {
+                transform: translateX(320px) translateY(-8px);
+            }
+
+            82% {
+                transform: translateX(470px) translateY(0);
+            }
+
+            100% {
+                left: 130%;
+                transform: translateX(600px);
+            }
+        }
+
+        .aaben {
+            font-weight: bold;
+            font-size: 27px;
+            color: #173d25;
+        }
     </style>
 </head>
 
 <body>
 
 <div class="kort">
-    <div class="ikon">🏎️ 🐎</div>
+
+    <div class="lego-linje">
+        <div class="klods groen"></div>
+        <div class="klods roed"></div>
+        <div class="klods blaa"></div>
+        <div class="klods gul"></div>
+    </div>
 
     <h1>STALDPLADS TIL DIN HESTEKRAFT</h1>
+
+    <div class="hestezone">
+        <div class="bil">🏎️</div>
+        <div class="hest" id="hest">🐎</div>
+    </div>
 
     <div class="undertekst" id="besked">
         Stalden er endnu ikke åben.<br><br>
@@ -67,13 +161,13 @@
     <div class="lille">
         Seminar 9.–10. september 2026
     </div>
+
 </div>
 
 <script>
     const nu = new Date();
 
-    // Dansk sommertid (CEST = UTC+2)
-    const aabner = new Date("2026-09-01T00:00:00+02:00");
+    const aabner = new Date("2026-09-09T12:00:00+02:00");
     const lukker = new Date("2026-09-10T12:00:00+02:00");
 
     const parkering =
@@ -82,17 +176,21 @@
     if (nu >= aabner && nu < lukker) {
 
         document.getElementById("besked").innerHTML =
-            "Porten er åben! 🏰<br><br>Du sendes videre til parkeringsregistreringen...";
+            '<span class="aaben">PORTEN ER ÅBEN! 🏰</span><br><br>' +
+            'Din hestekraft er sluppet løs.<br>' +
+            'Du sendes videre til parkeringsregistreringen...';
+
+        document.getElementById("hest").classList.add("galop");
 
         setTimeout(function () {
             window.location.href = parkering;
-        }, 1200);
+        }, 4200);
 
     } else if (nu >= lukker) {
 
         document.getElementById("besked").innerHTML =
-            "Stalden er lukket. 🐎<br><br>Tak for denne gang – alle hestekræfter er sendt godt hjem.";
-
+            "Stalden er lukket. 🐎<br><br>" +
+            "Tak for denne gang – alle hestekræfter er sendt godt hjem.";
     }
 </script>
 
