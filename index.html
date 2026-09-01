@@ -58,16 +58,43 @@
 
     <h1>STALDPLADS TIL DIN HESTEKRAFT</h1>
 
-    <div class="undertekst">
+    <div class="undertekst" id="besked">
         Stalden er endnu ikke åben.<br><br>
-        Kom tilbage, når vi nærmer os afgang.
-        Parkeringsmesteren holder stadig porten lukket. 🔐
+        Kom tilbage den 9. september efter kl. 12:00.<br>
+        Parkeringsmesteren holder porten lukket lidt endnu. 🔐
     </div>
 
     <div class="lille">
         Seminar 9.–10. september 2026
     </div>
 </div>
+
+<script>
+    const nu = new Date();
+
+    // Dansk sommertid (CEST = UTC+2)
+    const aabner = new Date("2026-09-09T12:00:00+02:00");
+    const lukker = new Date("2026-09-10T12:00:00+02:00");
+
+    const parkering =
+        "https://tilmelding.apcoa.dk/legoland/hotel-legoland";
+
+    if (nu >= aabner && nu < lukker) {
+
+        document.getElementById("besked").innerHTML =
+            "Porten er åben! 🏰<br><br>Du sendes videre til parkeringsregistreringen...";
+
+        setTimeout(function () {
+            window.location.href = parkering;
+        }, 1200);
+
+    } else if (nu >= lukker) {
+
+        document.getElementById("besked").innerHTML =
+            "Stalden er lukket. 🐎<br><br>Tak for denne gang – alle hestekræfter er sendt godt hjem.";
+
+    }
+</script>
 
 </body>
 </html>
